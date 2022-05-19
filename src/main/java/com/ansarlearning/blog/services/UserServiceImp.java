@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ansarlearning.blog.entity.User;
+import com.ansarlearning.blog.exception.ResourceNotFoundException;
 import com.ansarlearning.blog.payload.UserDto;
 import com.ansarlearning.blog.repository.UserRepository;
 
@@ -18,6 +20,8 @@ public class UserServiceImp implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -29,7 +33,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserDto updateUser(UserDto user, Integer userId) {
 		User updateUser = this.userRepository.findById(userId)
-				.orElseThrow(() -> new ResolutionException("User Not Found: " + userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User"," id ", userId));
 
 		updateUser.setName(user.getName());
 		updateUser.setEmail(user.getEmail());
@@ -44,7 +48,7 @@ public class UserServiceImp implements UserService {
 	@Override
 	public UserDto getUserById(Integer userId) {
 		User getUser = this.userRepository.findById(userId)
-				.orElseThrow(() -> new ResolutionException("User Not Found: " + userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User"," id ", userId));
 		UserDto userToDto = this.userToDto(getUser);
 		return userToDto;
 	}
@@ -70,32 +74,34 @@ public class UserServiceImp implements UserService {
 	@Override
 	public void deleteUser(Integer userId) {
 		User getUser = this.userRepository.findById(userId)
-				.orElseThrow(() -> new ResolutionException("User Not Found: " + userId));
+				.orElseThrow(() -> new ResourceNotFoundException("User"," id ", userId));
 		this.userRepository.delete(getUser);
 
 	}
 
 	public User dtoToUser(UserDto userDto) {
-		User user = new User();
+		User user = this.mapper.map(userDto, User.class);
 
-		user.setId(userDto.getId());
-
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getEmail());
-		user.setPassword(userDto.getPassword());
-		user.setAbout(userDto.getAbout());
+		/*
+		 * user.setId(userDto.getId());
+		 * 
+		 * user.setName(userDto.getName()); user.setEmail(userDto.getEmail());
+		 * user.setPassword(userDto.getPassword()); user.setAbout(userDto.getAbout());
+		 */
 
 		return user;
 	}
 
 	public UserDto userToDto(User user) {
-		UserDto userDto = new UserDto();
+		UserDto userDto = this.mapper.map(user, UserDto.class);
+		
+		
 
-		userDto.setId(user.getId());
-		userDto.setName(user.getName());
-		userDto.setEmail(user.getEmail());
-		userDto.setPassword(user.getPassword());
-		userDto.setAbout(user.getAbout());
+		/*
+		 * userDto.setId(user.getId()); userDto.setName(user.getName());
+		 * userDto.setEmail(user.getEmail()); userDto.setPassword(user.getPassword());
+		 * userDto.setAbout(user.getAbout());
+		 */
 
 		return userDto;
 	}

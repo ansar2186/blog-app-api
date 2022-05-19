@@ -6,11 +6,14 @@ public class ResourceNotFoundException extends RuntimeException {
 	public Integer fieldValue;
 
 	public ResourceNotFoundException(String resourceName, String filedName, Integer fieldValue) {
-		super();
+		super(String.format("%s not found  with %s : %s",resourceName,filedName,fieldValue));
 		this.resourceName = resourceName;
 		this.filedName = filedName;
 		this.fieldValue = fieldValue;
 	}
+	
+	
+	
 
 	public String getResourceName() {
 		return resourceName;
