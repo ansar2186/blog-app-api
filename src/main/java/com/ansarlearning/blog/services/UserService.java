@@ -12,7 +12,7 @@ public interface UserService {
 
 	public UserDto getUserById(Integer userId);
 
-	List<UserDto> getAllUser();
+	public List<UserDto> getAllUser();
 
 	public void deleteUser(Integer userId);
 
