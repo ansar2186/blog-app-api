@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ansarlearning.blog.entity.Categories;
@@ -64,6 +65,7 @@ public class PostServiceImp implements PostService {
 				.orElseThrow(() -> new ResourceNotFoundException("Post", "Post ID", postId));
 		post.setTitle(postDto.getTitle());
 		post.setContent(postDto.getContent());
+		post.setImageName(postDto.getImageName());
 
 		Post savePost = this.postRepository.save(post);
 		PostDto psotDto = this.mapper.map(savePost, PostDto.class);
@@ -118,31 +120,45 @@ public class PostServiceImp implements PostService {
 
 	@Override
 	public List<PostDto> searchPosts(String keyWord) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Post> searchPosts = this.postRepository.searchByKeyword(keyWord);
+		List<PostDto> postDtoList = searchPosts.stream().map((posts -> this.mapper.map(posts, PostDto.class)))
+				.collect(Collectors.toList());
+
+		return postDtoList;
 	}
 
 	@Override
-	public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
-		
-		Pageable pageable = PageRequest.of(pageNumber, pageSize);
-		
+	public PostResponse getAllPost(Integer pageNumber, Integer pageSize, String sortBy, String sortDirection) {
+
+		// using ternpry operator
+		Sort sort = (sortDirection.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+
+		/*
+		 * if (sortDirection.equalsIgnoreCase("asc")) {
+		 * 
+		 * sort = Sort.by(sortBy).ascending();
+		 * 
+		 * } else { sort = Sort.by(sortBy).descending(); }
+		 */
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
 		Page<Post> pagePost = this.postRepository.findAll(pageable);
-		
+
 		List<Post> allPosts = pagePost.getContent();
 
 		// List<Post> findAll = this.postRepository.findAll();
 		List<PostDto> postDto = allPosts.stream().map((posts) -> this.mapper.map(posts, PostDto.class))
 				.collect(Collectors.toList());
-		
-		PostResponse  response= new PostResponse();
+
+		PostResponse response = new PostResponse();
 		response.setContent(postDto);
 		response.setPageNumber(pagePost.getNumber());
 		response.setPageSize(pagePost.getSize());
 		response.setTotalElements(pagePost.getTotalElements());
 		response.setTotalPage(pagePost.getTotalPages());
 		response.setLastPage(pagePost.isLast());
-		
+
 		return response;
 	}
 

@@ -20,7 +20,7 @@ public interface PostService {
 	//public List<PostDto> getAllPost();
 	
 	//used for pagination
-	public PostResponse getAllPost(Integer pageNumber, Integer pageSize);
+	public PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDirection);
 
 	// getPostById
 	public PostDto getPostById(Integer postId);
