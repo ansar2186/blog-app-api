@@ -1,12 +1,12 @@
 package com.ansarlearning.blog.payload;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.ansarlearning.blog.entity.Categories;
-import com.ansarlearning.blog.entity.User;
 
 public class PostDto {
 
@@ -21,6 +21,8 @@ public class PostDto {
 	private Date createdDate;
 	private CategoryDto categories;
 	private UserDto user;
+
+	private Set<CommentDto> set = new HashSet<>();
 
 	public PostDto() {
 		super();
@@ -96,4 +98,13 @@ public class PostDto {
 		this.postId = postId;
 	}
 
+	public Set<CommentDto> getSet() {
+		return set;
+	}
+
+	public void setSet(Set<CommentDto> set) {
+		this.set = set;
+	}
+
+	
 }

@@ -2,7 +2,10 @@ package com.ansarlearning.blog.entity;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -37,6 +41,9 @@ public class Post {
 
 	@ManyToOne
 	private User user;
+	
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+	private Set<Comments> set = new HashSet<>();
 
 	public Post() {
 	}
@@ -51,6 +58,22 @@ public class Post {
 		this.createdDate = createdDate;
 		this.categories = categories;
 		this.user = user;
+	}
+	
+	
+	
+
+	public Post(Integer postId, String title, String content, String imageName, Date createdDate, Categories categories,
+			User user, Set<Comments> set) {
+		super();
+		this.postId = postId;
+		this.title = title;
+		this.content = content;
+		this.imageName = imageName;
+		this.createdDate = createdDate;
+		this.categories = categories;
+		this.user = user;
+		this.set = set;
 	}
 
 	public Integer getPostId() {
@@ -108,5 +131,15 @@ public class Post {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public Set<Comments> getSet() {
+		return set;
+	}
+
+	public void setSet(Set<Comments> set) {
+		this.set = set;
+	}
+	
+	
 
 }
