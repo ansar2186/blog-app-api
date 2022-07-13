@@ -1,14 +1,20 @@
 package com.ansarlearning.blog.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,6 +38,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Post> postList = new ArrayList<>();
 
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "role_Id"))
+	private Set<UserRole> userRole = new HashSet<>();
+
 	public User() {
 	}
 
@@ -43,6 +53,21 @@ public class User {
 		this.password = password;
 		this.about = about;
 		this.postList = postList;
+	}
+	
+	
+	
+
+	public User(int id, String name, String email, String password, String about, List<Post> postList,
+			Set<UserRole> userRole) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.about = about;
+		this.postList = postList;
+		this.userRole = userRole;
 	}
 
 	public int getId() {
@@ -92,5 +117,16 @@ public class User {
 	public void setPostList(List<Post> postList) {
 		this.postList = postList;
 	}
+
+	public Set<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+	
+	
+	
 
 }
