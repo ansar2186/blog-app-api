@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ansarlearning.blog.entity.User;
@@ -22,10 +23,13 @@ public class UserServiceImp implements UserService {
 	private UserRepository userRepository;
 	@Autowired
 	private ModelMapper mapper;
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		User user = this.dtoToUser(userDto);
+		user.setPassword(this.encoder.encode(userDto.getPassword()));
 		User savesUser = this.userRepository.save(user);
 		return this.userToDto(savesUser);
 	}
