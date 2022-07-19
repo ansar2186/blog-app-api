@@ -5,6 +5,8 @@ import java.util.List;
 import com.ansarlearning.blog.payload.UserDto;
 
 public interface UserService {
+	
+	public UserDto registerNewUser(UserDto userDto);
 
 	public UserDto createUser(UserDto userDto);
 

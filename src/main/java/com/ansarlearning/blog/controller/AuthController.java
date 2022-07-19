@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ansarlearning.blog.exception.InvalidCredentialsException;
 import com.ansarlearning.blog.payload.JwtAuthRequest;
+import com.ansarlearning.blog.payload.UserDto;
 import com.ansarlearning.blog.security.JWTTokenHelper;
 import com.ansarlearning.blog.security.JwtAuthResponse;
 import com.ansarlearning.blog.security.JwtAuthenticationFilter;
+import com.ansarlearning.blog.services.UserService;
 
 @RestController
 @RequestMapping("/api/v1/auth/")
@@ -30,6 +32,9 @@ public class AuthController {
 	private UserDetailsService detailsService;
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private UserService userService;
 
 	@PostMapping("/login")
 	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest authRequest) throws Exception {
@@ -57,6 +62,15 @@ public class AuthController {
 			throw new InvalidCredentialsException("Invalid Credentials");
 		}
 
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<UserDto> userRegister(@RequestBody UserDto userDto){
+		
+		UserDto registeredUser = this.userService.registerNewUser(userDto);
+		
+		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
+		
 	}
 
 }

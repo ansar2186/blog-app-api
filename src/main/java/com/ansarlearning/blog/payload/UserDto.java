@@ -1,8 +1,13 @@
 package com.ansarlearning.blog.payload;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import com.ansarlearning.blog.entity.UserRole;
 
 
 public class UserDto {
@@ -16,8 +21,10 @@ public class UserDto {
 	@NotEmpty
 	@Size(min = 5,max = 8, message = "Password must be contain minimum 5 character and maximum 8 character")
 	private String password;
-
 	private String about;
+	
+	private Set<UserRoleDto> userRole = new HashSet<>();
+
 
 	public int getId() {
 		return id;
@@ -76,5 +83,15 @@ public class UserDto {
 		return "UserDto [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", about="
 				+ about + "]";
 	}
+
+	public Set<UserRoleDto> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(Set<UserRoleDto> userRole) {
+		this.userRole = userRole;
+	}
+	
+	
 
 }
