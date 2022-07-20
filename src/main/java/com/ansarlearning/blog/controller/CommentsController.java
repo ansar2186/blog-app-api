@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansarlearning.blog.config.AppConstant;
 import com.ansarlearning.blog.payload.ApiResponse;
 import com.ansarlearning.blog.payload.CommentDto;
 import com.ansarlearning.blog.services.CommentsService;
@@ -18,6 +19,7 @@ import com.ansarlearning.blog.services.CommentsService;
 @RequestMapping("/api")
 public class CommentsController {
 
+	
 	@Autowired
 	public CommentsService commentsService;
 
@@ -35,7 +37,7 @@ public class CommentsController {
 
 		this.commentsService.deleteComment(cmntId);
 
-		return new ResponseEntity<ApiResponse>(new ApiResponse("Comment Successfully Deleted", true), HttpStatus.OK);
+		return new ResponseEntity<ApiResponse>(new ApiResponse(AppConstant.COMMENT_DELETED_MESSAGE, true), HttpStatus.OK);
 
 	}
 

@@ -18,7 +18,6 @@ import com.ansarlearning.blog.payload.JwtAuthRequest;
 import com.ansarlearning.blog.payload.UserDto;
 import com.ansarlearning.blog.security.JWTTokenHelper;
 import com.ansarlearning.blog.security.JwtAuthResponse;
-import com.ansarlearning.blog.security.JwtAuthenticationFilter;
 import com.ansarlearning.blog.services.UserService;
 
 @RestController

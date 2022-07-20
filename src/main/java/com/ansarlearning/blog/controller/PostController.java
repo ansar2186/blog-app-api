@@ -1,6 +1,5 @@
 package com.ansarlearning.blog.controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -35,6 +34,8 @@ import com.ansarlearning.blog.services.PostService;
 @RestController
 @RequestMapping("/api")
 public class PostController {
+
+	
 
 	@Autowired
 	public PostService postService;
@@ -127,7 +128,7 @@ public class PostController {
 
 		this.postService.deletePost(postId);
 
-		return new ApiResponse("Post SuccessFully Deleted with Id: " + postId, true);
+		return new ApiResponse(AppConstant.POST_SUCCESS_FULLY_DELETED_WITH_ID + postId, true);
 
 	}
 

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansarlearning.blog.config.AppConstant;
 import com.ansarlearning.blog.payload.UserDto;
 import com.ansarlearning.blog.services.UserService;
 
@@ -26,6 +26,7 @@ import com.ansarlearning.blog.services.UserService;
 @RequestMapping("/api/users")
 public class HomeController {
 
+	
 	@Autowired
 	private UserService service;
 	
@@ -61,7 +62,7 @@ public class HomeController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteUserById(@PathVariable("id") Integer uId) {
 		this.service.deleteUser(uId);
-		return new ResponseEntity(Map.of("Message", "User Delete Successfully with ID: " + uId), HttpStatus.OK);
+		return new ResponseEntity<>(Map.of("Message", AppConstant.USER_DELETE_SUCCESSFULLY_WITH_ID + uId), HttpStatus.OK);
 
 	}
 

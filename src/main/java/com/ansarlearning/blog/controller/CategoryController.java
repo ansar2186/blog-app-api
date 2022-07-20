@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ansarlearning.blog.config.AppConstant;
 import com.ansarlearning.blog.payload.CategoryDto;
 import com.ansarlearning.blog.services.CategoryService;
 
@@ -26,6 +25,7 @@ import com.ansarlearning.blog.services.CategoryService;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
+	
 	@Autowired
 	private CategoryService categoryService;
 
@@ -82,7 +82,7 @@ public class CategoryController {
 	public ResponseEntity<?> deleteCategory(@PathVariable("id") Integer categoryId) {
 		this.categoryService.deleteCategory(categoryId);
 
-		return new ResponseEntity(Map.of("Message", "Categor Delete Successfully with ID: " + categoryId),
+		return new ResponseEntity<>(Map.of("Message", AppConstant.CATEGOR_DELETE_SUCCESSFULLY_WITH_ID + categoryId),
 				HttpStatus.OK);
 	}
 
