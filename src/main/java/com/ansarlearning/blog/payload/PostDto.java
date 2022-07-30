@@ -26,7 +26,6 @@ public class PostDto {
 
 	public PostDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public PostDto(Integer postId, @NotEmpty @Size(min = 3, message = "Title size must be 3 characters") String title,

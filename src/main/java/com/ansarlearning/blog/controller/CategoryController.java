@@ -38,7 +38,7 @@ public class CategoryController {
 
 		CategoryDto createCategory = this.categoryService.createCategory(categoryDto);
 
-		return new ResponseEntity<CategoryDto>(createCategory, HttpStatus.CREATED);
+		return new ResponseEntity<>(createCategory, HttpStatus.CREATED);
 
 	}
 
@@ -49,7 +49,7 @@ public class CategoryController {
 		
 		CategoryDto updateCategory = this.categoryService.updateCategory(categoryDto, categoryId);
 		
-		return new ResponseEntity<CategoryDto>(updateCategory, HttpStatus.OK);
+		return new ResponseEntity<>(updateCategory, HttpStatus.OK);
 		
 	}
 
@@ -61,7 +61,7 @@ public class CategoryController {
 
 		CategoryDto categoryById = this.categoryService.getCategoryById(categoryId);
 
-		return new ResponseEntity<CategoryDto>(categoryById, HttpStatus.OK);
+		return new ResponseEntity<>(categoryById, HttpStatus.OK);
 
 	}
 
@@ -72,7 +72,7 @@ public class CategoryController {
 
 		List<CategoryDto> allCategory = this.categoryService.getAllCategory();
 
-		return new ResponseEntity<List<CategoryDto>>(allCategory, HttpStatus.OK);
+		return new ResponseEntity<>(allCategory, HttpStatus.OK);
 
 	}
 

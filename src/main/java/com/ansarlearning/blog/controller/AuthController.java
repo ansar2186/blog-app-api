@@ -36,7 +36,7 @@ public class AuthController {
 	private UserService userService;
 
 	@PostMapping("/login")
-	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest authRequest) throws Exception {
+	public ResponseEntity<JwtAuthResponse> createToken(@RequestBody JwtAuthRequest authRequest){
 
 		this.authenticate(authRequest.getUserName(), authRequest.getPassword());
 
@@ -46,18 +46,17 @@ public class AuthController {
 		JwtAuthResponse authResponse = new JwtAuthResponse();
 		authResponse.setToken(token);
 
-		return new ResponseEntity<JwtAuthResponse>(authResponse, HttpStatus.OK);
+		return new ResponseEntity<>(authResponse, HttpStatus.OK);
 
 	}
 
-	private void authenticate(String userName, String password) throws Exception {
+	private void authenticate(String userName, String password) {
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,
 				password);
 		try {
 			this.authenticationManager.authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
-			System.out.println("Invalid User Name and Password");
 			throw new InvalidCredentialsException("Invalid Credentials");
 		}
 
@@ -68,7 +67,7 @@ public class AuthController {
 		
 		UserDto registeredUser = this.userService.registerNewUser(userDto);
 		
-		return new ResponseEntity<UserDto>(registeredUser, HttpStatus.CREATED);
+		return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
 		
 	}
 

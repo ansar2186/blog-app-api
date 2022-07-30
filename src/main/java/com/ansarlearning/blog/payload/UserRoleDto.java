@@ -6,8 +6,6 @@ public class UserRoleDto {
 	private String name;
 
 	public UserRoleDto() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public UserRoleDto(Integer id, String name) {

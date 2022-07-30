@@ -2,7 +2,6 @@ package com.ansarlearning.blog.services;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -68,9 +67,7 @@ public class PostServiceImp implements PostService {
 		post.setImageName(postDto.getImageName());
 
 		Post savePost = this.postRepository.save(post);
-		PostDto psotDto = this.mapper.map(savePost, PostDto.class);
-
-		return psotDto;
+		return this.mapper.map(savePost, PostDto.class);
 	}
 
 	@Override
@@ -81,19 +78,12 @@ public class PostServiceImp implements PostService {
 
 	}
 
-	/*
-	 * @Override public List<PostDto> getAllPost() { List<Post> findAll =
-	 * this.postRepository.findAll(); List<PostDto> postDto =
-	 * findAll.stream().map((posts) -> this.mapper.map(posts, PostDto.class))
-	 * .collect(Collectors.toList()); return postDto; }
-	 */
 
 	@Override
 	public PostDto getPostById(Integer postId) {
 		Post post = this.postRepository.findById(postId)
 				.orElseThrow(() -> new ResourceNotFoundException("Post", "Post ID", postId));
-		PostDto postDto = this.mapper.map(post, PostDto.class);
-		return postDto;
+		return this.mapper.map(post, PostDto.class);
 	}
 
 	@Override
@@ -101,9 +91,7 @@ public class PostServiceImp implements PostService {
 		Categories cat = this.categoryRepo.findById(categoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Category", "Category ID", categoryId));
 		List<Post> posts = this.postRepository.findByCategories(cat);
-		List<PostDto> postDto = posts.stream().map((post) -> this.mapper.map(post, PostDto.class))
-				.collect(Collectors.toList());
-		return postDto;
+		return posts.stream().map((post) -> this.mapper.map(post, PostDto.class)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -112,19 +100,16 @@ public class PostServiceImp implements PostService {
 		User user = this.userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "User ID", userId));
 		List<Post> findByUser = this.postRepository.findByUser(user);
-		List<PostDto> postDto = findByUser.stream().map((userList) -> this.mapper.map(userList, PostDto.class))
-				.collect(Collectors.toList());
 
-		return postDto;
+		return findByUser.stream().map(userList -> this.mapper.map(userList, PostDto.class))
+				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<PostDto> searchPosts(String keyWord) {
 		List<Post> searchPosts = this.postRepository.searchByKeyword(keyWord);
-		List<PostDto> postDtoList = searchPosts.stream().map((posts -> this.mapper.map(posts, PostDto.class)))
-				.collect(Collectors.toList());
 
-		return postDtoList;
+		return searchPosts.stream().map((posts -> this.mapper.map(posts, PostDto.class))).collect(Collectors.toList());
 	}
 
 	@Override
@@ -134,20 +119,12 @@ public class PostServiceImp implements PostService {
 		Sort sort = (sortDirection.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
 
-		/*
-		 * if (sortDirection.equalsIgnoreCase("asc")) {
-		 * 
-		 * sort = Sort.by(sortBy).ascending();
-		 * 
-		 * } else { sort = Sort.by(sortBy).descending(); }
-		 */
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
 		Page<Post> pagePost = this.postRepository.findAll(pageable);
 
 		List<Post> allPosts = pagePost.getContent();
 
-		// List<Post> findAll = this.postRepository.findAll();
 		List<PostDto> postDto = allPosts.stream().map((posts) -> this.mapper.map(posts, PostDto.class))
 				.collect(Collectors.toList());
 

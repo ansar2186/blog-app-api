@@ -3,6 +3,8 @@ package com.ansarlearning.blog;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,13 +22,17 @@ public class BlogAppApiApplication implements CommandLineRunner {
 
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	
+	private static final Logger logger = LoggerFactory.getLogger(BlogAppApiApplication.class);
+
 
 	@Autowired
 	private RoleRepo roleRepo;
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext applicationContext = SpringApplication.run(BlogAppApiApplication.class, args);
-		System.out.println(applicationContext);
+		
 	}
 
 	@Bean
@@ -37,7 +43,6 @@ public class BlogAppApiApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println(this.encoder.encode("lubna123"));
 
 		try {
 			UserRole role = new UserRole();
@@ -52,11 +57,12 @@ public class BlogAppApiApplication implements CommandLineRunner {
 
 			List<UserRole> saveAllRole = this.roleRepo.saveAll(listRole);
 
-			saveAllRole.forEach(r -> {
-				System.out.println(r.getRoleName());
-			});
+			saveAllRole.forEach(r -> 
+				logger.debug(r.getRoleName())
+			);
 
 		} catch (Exception e) {
+			logger.debug(e.getMessage());
 
 		}
 

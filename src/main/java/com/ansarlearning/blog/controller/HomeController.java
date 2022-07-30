@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +32,16 @@ public class HomeController {
 	@Autowired
 	private UserService service;
 	
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+	
 
 	@PostMapping("/create")
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
 		
 		
 		UserDto createUser = this.service.createUser(userDto);
-
-		System.out.println("Password------------" + userDto.getPassword());
 
 		return new ResponseEntity<>(createUser, HttpStatus.CREATED);
 

@@ -52,7 +52,7 @@ public class PostController {
 
 		PostDto createPost = this.postService.createPost(postDto, userID, categoryId);
 
-		return new ResponseEntity<PostDto>(createPost, HttpStatus.CREATED);
+		return new ResponseEntity<>(createPost, HttpStatus.CREATED);
 
 	}
 
@@ -63,7 +63,7 @@ public class PostController {
 
 		List<PostDto> postsByUser = this.postService.getPostsByUser(userId);
 
-		return new ResponseEntity<List<PostDto>>(postsByUser, HttpStatus.OK);
+		return new ResponseEntity<>(postsByUser, HttpStatus.OK);
 
 	}
 
@@ -74,21 +74,11 @@ public class PostController {
 
 		List<PostDto> postsByUser = this.postService.getPostsByCategory(categoryId);
 
-		return new ResponseEntity<List<PostDto>>(postsByUser, HttpStatus.OK);
+		return new ResponseEntity<>(postsByUser, HttpStatus.OK);
 
 	}
 
-	/*
-	 * // get All Post
-	 * 
-	 * @GetMapping("/posts") public ResponseEntity<List<PostDto>> getAllPost() {
-	 * 
-	 * List<PostDto> allPost = this.postService.getAllPost();
-	 * 
-	 * return new ResponseEntity<List<PostDto>>(allPost, HttpStatus.OK);
-	 * 
-	 * }
-	 */
+	
 
 	// get All Post for pagination
 	@GetMapping("/posts")
@@ -100,15 +90,15 @@ public class PostController {
 
 		PostResponse allPost = this.postService.getAllPost(pageNumber, pageSize, sortBy, sortDirection);
 
-		return new ResponseEntity<PostResponse>(allPost, HttpStatus.OK);
+		return new ResponseEntity<>(allPost, HttpStatus.OK);
 
 	}
 
 	// getPost By PostId
 	@GetMapping("/postId/{PostId}")
-	public ResponseEntity<PostDto> getPostByPostId(@PathVariable Integer PostId) {
-		PostDto postById = this.postService.getPostById(PostId);
-		return new ResponseEntity<PostDto>(postById, HttpStatus.OK);
+	public ResponseEntity<PostDto> getPostByPostId(@PathVariable Integer postId) {
+		PostDto postById = this.postService.getPostById(postId);
+		return new ResponseEntity<>(postById, HttpStatus.OK);
 
 	}
 
@@ -118,7 +108,7 @@ public class PostController {
 
 		PostDto updatePost = this.postService.updatePost(postDto, postID);
 
-		return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
+		return new ResponseEntity<>(updatePost, HttpStatus.OK);
 
 	}
 
@@ -137,7 +127,7 @@ public class PostController {
 
 		List<PostDto> searchPosts = this.postService.searchPosts(keyWord);
 
-		return new ResponseEntity<List<PostDto>>(searchPosts, HttpStatus.OK);
+		return new ResponseEntity<>(searchPosts, HttpStatus.OK);
 
 	}
 
@@ -152,7 +142,7 @@ public class PostController {
 
 		PostDto updatePost = this.postService.updatePost(post, postId);
 
-		return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
+		return new ResponseEntity<>(updatePost, HttpStatus.OK);
 
 	}
 	

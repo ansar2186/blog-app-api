@@ -2,7 +2,6 @@ package com.ansarlearning.blog.services;
 
 import java.util.List;
 
-import com.ansarlearning.blog.entity.Comments;
 import com.ansarlearning.blog.payload.CommentDto;
 
 public interface CommentsService {

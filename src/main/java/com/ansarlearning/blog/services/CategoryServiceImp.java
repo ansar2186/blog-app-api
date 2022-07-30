@@ -15,6 +15,8 @@ import com.ansarlearning.blog.repository.CategoryRepo;
 @Service
 public class CategoryServiceImp implements CategoryService {
 
+	private static final String CATEGORY = "Category";
+
 	@Autowired
 	private CategoryRepo categoryRepo;
 
@@ -32,18 +34,24 @@ public class CategoryServiceImp implements CategoryService {
 
 	@Override
 	public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
+		
 		Categories categoriesById = this.categoryRepo.findById(categoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("category", "CategoryId", categoryId));
+		
 		categoriesById.setCategoryTitle(categoryDto.getCategoryTitle());
+		
 		categoriesById.setCategoryDescription(categoryDto.getCategoryDescription());
+
 		this.categoryRepo.save(categoriesById);
+		
 		return this.mapper.map(categoriesById, CategoryDto.class);
 	}
 
 	@Override
 	public CategoryDto getCategoryById(Integer categoryID) {
+		
 		Categories categoriesById = this.categoryRepo.findById(categoryID)
-				.orElseThrow(() -> new ResourceNotFoundException("Category", "Category", categoryID));
+				.orElseThrow(() -> new ResourceNotFoundException(CATEGORY, CATEGORY, categoryID));
 
 		return this.mapper.map(categoriesById, CategoryDto.class);
 	}
@@ -51,16 +59,15 @@ public class CategoryServiceImp implements CategoryService {
 	@Override
 	public List<CategoryDto> getAllCategory() {
 		List<Categories> findAll = this.categoryRepo.findAll();
-		List<CategoryDto> categoryDtoList = findAll.stream().map(cat -> this.mapper.map(cat, CategoryDto.class))
-				.collect(Collectors.toList());
-		return categoryDtoList;
+
+		return findAll.stream().map(cat -> this.mapper.map(cat, CategoryDto.class)).collect(Collectors.toList());
 	}
 
 	@Override
 	public void deleteCategory(Integer categoryId) {
 
 		Categories categoriesById = this.categoryRepo.findById(categoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Category", "Category", categoryId));
+				.orElseThrow(() -> new ResourceNotFoundException(CATEGORY, CATEGORY, categoryId));
 		this.categoryRepo.delete(categoriesById);
 
 	}

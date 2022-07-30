@@ -2,7 +2,6 @@ package com.ansarlearning.blog.services;
 
 import java.util.List;
 
-import com.ansarlearning.blog.entity.Post;
 import com.ansarlearning.blog.payload.PostDto;
 import com.ansarlearning.blog.payload.PostResponse;
 
@@ -16,8 +15,6 @@ public interface PostService {
 	// deletePost
 	public void deletePost(Integer postId);
 
-	// getAllPost
-	//public List<PostDto> getAllPost();
 	
 	//used for pagination
 	public PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy,String sortDirection);

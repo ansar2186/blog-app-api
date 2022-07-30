@@ -28,7 +28,7 @@ public class CommentsController {
 
 		CommentDto cmntDto = commentsService.createComment(commentDto, postId);
 
-		return new ResponseEntity<CommentDto>(cmntDto, HttpStatus.CREATED);
+		return new ResponseEntity<>(cmntDto, HttpStatus.CREATED);
 
 	}
 
@@ -37,7 +37,7 @@ public class CommentsController {
 
 		this.commentsService.deleteComment(cmntId);
 
-		return new ResponseEntity<ApiResponse>(new ApiResponse(AppConstant.COMMENT_DELETED_MESSAGE, true), HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse(AppConstant.COMMENT_DELETED_MESSAGE, true), HttpStatus.OK);
 
 	}
 

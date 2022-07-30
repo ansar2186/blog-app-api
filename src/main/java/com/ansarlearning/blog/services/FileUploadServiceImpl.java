@@ -47,9 +47,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 		String fullPath = path + File.separator + fileName;
 
-		InputStream inputStream = new FileInputStream(fullPath);
-
-		return inputStream;
+		return new FileInputStream(fullPath);
 	}
 
 }
