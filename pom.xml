@@ -106,6 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>blog-app-api</finalName>
 	</build>
 
 </project>
